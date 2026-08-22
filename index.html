@@ -7,22 +7,249 @@
     <title>MendezSoftwagic</title>
     <meta name="description" content="Software that creates magic">
     <meta name="keywords"
-        content="Software, Magic, C++, Python, TypeScript, Unreal Engine, Machine Learning, Costa Rica">
-    <link rel="icon" href="mendez_softwagic_icon.png" type="image/png">
-
+        content="Software, Magic, C++, Python, TypeScript, Unreal Engine, AI Engineering, Costa Rica, ROS, React">
+    <link rel="icon" href="./images/mendez_softwagic_icon.png" type="image/png">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
-    <header>
-        <h1>MendezSoftwagic Creating Magic</h1>
-        <p>Welcome to our magical software!</p>
-        <p>Especialist in C++, Python, TypeScript, Unreal Engine, Machine Learning, ROS</p>
-        <b>Based in Costa Rica, Here are some of our projects:</b>
-        <canvas id="TopoToolsCanvas" width="400" height="400">
-            Your browser does not support the HTML canvas tag.</canvas>
+    <main id="app-root" class="page-shell">
+        <header>
+            <div class="hero-title-wrap">
+                <h1 class="flame-title" data-text="MendezSoftwagic Creating Magic">MendezSoftwagic Creating Magic</h1>
+                <div class="ethereal-particles" aria-hidden="true"></div>
+            </div>
+            <p class="lead">Welcome to my magical software!</p>
+            <p>Specialist in C++, Python, TypeScript, Unreal Engine, AI Engineering.</p>
 
-    </header>
+            <section class="tech-stack" aria-label="Technologies we use">
+                <p class="tech-title">Technologies</p>
+                <ul class="tech-list">
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+                            alt="C++" />
+                        <span>C++</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+                            alt="HTML" />
+                        <span>HTML</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+                            alt="CSS" />
+                        <span>CSS</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+                            alt="Python" />
+                        <span>Python</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+                            alt="TypeScript" />
+                        <span>TypeScript</span>
+                    </li>
+                    <li>
+                        <img class="tech-icon-white"
+                            src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unrealengine/unrealengine-original.svg"
+                            alt="Unreal Engine" />
+                        <span>UE5</span>
+                    </li>
+                    <li>
+                        <img class="tech-ai-icon" src="./images/ai_engineering.svg" alt="AI Engineering"
+                            data-fallback="ai" />
+                        <span class="tech-fallback" aria-hidden="true" hidden>AI</span>
+                        <span>AI Engineering</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg"
+                            alt="Computer Vision" />
+                        <span>Vision</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ros/ros-original.svg"
+                            alt="ROS" />
+                        <span>ROS</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+                            alt="React" />
+                        <span>React</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+                            alt="PostgreSQL" />
+                        <span>PostgreSQL</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg"
+                            alt="SQLite" />
+                        <span>SQLite</span>
+                    </li>
+                    <li>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+                            alt="Docker" />
+                        <span>Docker</span>
+                    </li>
+                    <li>
+                        <img class="tech-raylib-icon" src="./images/raylib.svg" alt="Raylib" data-fallback="raylib" />
+                        <span class="tech-fallback" aria-hidden="true" hidden>RL</span>
+                        <span>Raylib</span>
+                    </li>
+                </ul>
+            </section>
+        </header>
 
+        <p class="helper">Project descriptions are shown below.</p>
+
+        <section class="projects-grid">
+            <article class="project-card is-open" aria-expanded="true" data-project="topotools"
+                style="--wallpaper: url('./images/topotools_background.png')">
+                <div class="project-wallpaper" aria-hidden="true"></div>
+
+                <div class="project-summary">
+                    <h3>Automation for surveyors</h3>
+                    <a href="https://www.topo-tools.com" target="_blank" rel="noreferrer">Visit project</a>
+                </div>
+
+                <section class="project-spec" aria-hidden="false">
+                    <div>
+                        <h2>TopoTools</h2>
+                        <p>TopoTools automates almost all office tasks for a surveyor: quoting, plan reading, drafting,
+                            and
+                            georeferencing plans that do not have coordinates. It also searches and draws complete
+                            neighborhoods
+                            to speed up field surveys and deliverables.</p>
+                    </div>
+                    <span class="status">Nearly production-ready</span>
+                </section>
+            </article>
+
+            <article class="project-card is-open" aria-expanded="true" data-project="atlas"
+                style="--wallpaper: url('./images/atlas_wallpaper.png')">
+                <div class="project-wallpaper" aria-hidden="true"></div>
+
+                <div class="project-summary">
+                    <h3>Real geometry with LiDAR and GNSS</h3>
+                    <a href="https://www.atlas.com" target="_blank" rel="noreferrer">Visit project</a>
+                </div>
+
+                <section class="project-spec" aria-hidden="false">
+                    <div>
+                        <h2>Atlas</h2>
+                        <p>Atlas combines AI engineering to build geometry for a location using LiDAR and uses GNSS to
+                            create
+                            georeferenced anchors. It is in early finishing stage (20%), currently developed outside the
+                            ROS2
+                            ecosystem and still in software construction.</p>
+                    </div>
+                    <span class="status">20% complete</span>
+                </section>
+            </article>
+
+            <article class="project-card is-open" aria-expanded="true" data-project="umbra-caeli"
+                style="--wallpaper: url('./images/umbra_caeli_wallpaper.png')">
+                <div class="project-wallpaper" aria-hidden="true"></div>
+
+                <div class="project-summary">
+                    <h3>MMORPG with astral chart mechanics</h3>
+                    <a href="https://www.umbra-caeli.com" target="_blank" rel="noreferrer">Visit project</a>
+                </div>
+
+                <section class="project-spec" aria-hidden="false">
+                    <div>
+                        <h2>Umbra Caeli</h2>
+                        <p>Umbra Caeli is an MMORPG that uses a natal chart to create unique AI-powered abilities for
+                            each
+                            person. It is customizable and infinitely scalable, with an intense souls-like progression
+                            style.</p>
+                    </div>
+                    <span class="status">In development</span>
+                </section>
+            </article>
+        </section>
+    </main>
+    <div class="cursor-flare-layer" aria-hidden="true"></div>
+
+    <script>
+        const flareLayer = document.querySelector(".cursor-flare-layer");
+        let lastFlare = 0;
+
+        const createCursorFlare = (x, y) => {
+            if (!flareLayer) return;
+
+            const now = performance.now();
+            if (now - lastFlare < 35) return;
+            lastFlare = now;
+
+            const flare = document.createElement("span");
+            const size = 10 + Math.random() * 18;
+            const driftX = (Math.random() * 30 - 15).toFixed(1);
+            const driftY = (Math.random() * 30 - 35).toFixed(1);
+            const life = 650 + Math.random() * 450;
+
+            flare.className = "cursor-flare";
+            flare.style.left = `${x}px`;
+            flare.style.top = `${y}px`;
+            flare.style.width = `${size}px`;
+            flare.style.height = `${size}px`;
+            flare.style.setProperty("--drift-x", `${driftX}px`);
+            flare.style.setProperty("--drift-y", `${driftY}px`);
+            flare.style.animationDuration = `${life}ms`;
+
+            flareLayer.appendChild(flare);
+            setTimeout(() => flare.remove(), life + 80);
+        };
+
+        window.addEventListener("mousemove", (event) => {
+            createCursorFlare(event.clientX, event.clientY);
+        });
+
+        const particleHost = document.querySelector(".ethereal-particles");
+        const techImages = document.querySelectorAll(".tech-list img[data-fallback]");
+        techImages.forEach((img) => {
+            img.addEventListener("error", () => {
+                const fallback = img.parentElement.querySelector(".tech-fallback");
+                img.style.display = "none";
+                img.parentElement.classList.add("is-icon-missing");
+                if (fallback) {
+                    fallback.hidden = false;
+                }
+            });
+        });
+
+        const createParticle = () => {
+            if (!particleHost) return;
+
+            const particle = document.createElement("span");
+            const size = 2 + Math.random() * 3;
+            const drift = (Math.random() * 40 - 20).toFixed(1);
+            const rise = 80 + Math.random() * 90;
+            const duration = 2.2 + Math.random() * 1.8;
+            const opacity = 0.16 + Math.random() * 0.34;
+
+            particle.className = "ethereal-particle";
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.setProperty("--drift", `${drift}px`);
+            particle.style.setProperty("--rise", `${rise}px`);
+            particle.style.setProperty("--alpha", `${opacity}`);
+            particle.style.animation = `ethereal-particle ${duration}s linear forwards`;
+
+            particleHost.appendChild(particle);
+            setTimeout(() => particle.remove(), duration * 1000 + 100);
+        };
+
+        setInterval(() => {
+            createParticle();
+            if (Math.random() > 0.7) {
+                createParticle();
+            }
+        }, 130);
+
+    </script>
 </body>
 
 </html>

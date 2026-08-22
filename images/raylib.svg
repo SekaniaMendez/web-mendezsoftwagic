@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" aria-label="Raylib logo">
+  <defs>
+    <linearGradient id="ray-bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#17233f"/>
+      <stop offset="100%" stop-color="#081122"/>
+    </linearGradient>
+    <linearGradient id="ray-mark" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fbc12d"/>
+      <stop offset="100%" stop-color="#f89e1b"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#ray-bg)"/>
+  <circle cx="20" cy="20" r="12" fill="none" stroke="url(#ray-mark)" stroke-width="4" opacity="0.9"/>
+  <circle cx="44" cy="44" r="12" fill="none" stroke="#9fd6ff" stroke-width="3" opacity="0.7"/>
+  <path d="M20 44c10.8 0 17-6.4 17-17 0-3.4-.9-6.5-2.6-9.2" fill="none" stroke="url(#ray-mark)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M13 44h14" stroke="#fef7e1" stroke-width="3.4" stroke-linecap="round"/>
+  <text x="20" y="46" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" fill="#f5a623">R</text>
+</svg>
