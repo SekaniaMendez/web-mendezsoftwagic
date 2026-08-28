@@ -10,6 +10,7 @@ export function SceneEffects() {
     const root = document.documentElement;
     root.classList.add("has-motion");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const reveals = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -20,18 +21,18 @@ export function SceneEffects() {
     reveals.forEach((element) => observer.observe(element));
 
     const onPointerMove = (event: PointerEvent) => {
-      if (!reduceMotion && auraRef.current) auraRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
+      if (auraRef.current) auraRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
     };
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
     };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    if (!reduceMotion && hasFinePointer) window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
       observer.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
+      if (!reduceMotion && hasFinePointer) window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("scroll", onScroll);
       root.classList.remove("has-motion");
     };
