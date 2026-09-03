@@ -6,20 +6,24 @@ import { TechnologyIcon } from "@/components/technology-badge";
 import { AUDIO_ENERGY_EVENT, type AudioEnergyDetail } from "@/lib/audio-reactivity";
 
 const orbitTechnologies = [
-  { name: "C++", ring: "outer", angle: 8 },
-  { name: "TypeScript", ring: "outer", angle: 80 },
-  { name: "Swift", ring: "outer", angle: 152 },
-  { name: "Unreal Engine 5", ring: "outer", angle: 224 },
-  { name: "Docker", ring: "outer", angle: 296 },
-  { name: "Python", ring: "middle", angle: 42 },
-  { name: "React", ring: "middle", angle: 162 },
-  { name: "PostgreSQL", ring: "middle", angle: 282 },
-  { name: "AI Engineering", ring: "inner", angle: 15 },
-  { name: "ROS2", ring: "inner", angle: 135 },
-  { name: "3D", ring: "inner", angle: 255 },
+  { name: "LiDAR", ring: "outermost", angle: 45 },
+  { name: "GNSS", ring: "outermost", angle: 225 },
+  { name: "C++", ring: "outer", angle: 0 },
+  { name: "TypeScript", ring: "outer", angle: 72 },
+  { name: "Unreal Engine 5", ring: "outer", angle: 144 },
+  { name: "Docker", ring: "outer", angle: 216 },
+  { name: "Node.js", ring: "outer", angle: 288 },
+  { name: "Python", ring: "middle", angle: 26 },
+  { name: "Swift", ring: "middle", angle: 116 },
+  { name: "React", ring: "middle", angle: 206 },
+  { name: "PostgreSQL", ring: "middle", angle: 296 },
+  { name: "AI Engineering", ring: "inner", angle: 0 },
+  { name: "Computer Vision", ring: "inner", angle: 90 },
+  { name: "ROS2", ring: "inner", angle: 180 },
+  { name: "MongoDB", ring: "inner", angle: 270 },
 ] as const;
 
-const rings = ["outer", "middle", "inner"] as const;
+const rings = ["outermost", "outer", "middle", "inner"] as const;
 
 export function TechnologyOrbit() {
   const orbitRef = useRef<HTMLDivElement | null>(null);
