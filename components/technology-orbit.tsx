@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useRef } from "react";
 import { TechnologyIcon } from "@/components/technology-badge";
+import { AUDIO_ENERGY_EVENT, type AudioEnergyDetail } from "@/lib/audio-reactivity";
 
 const orbitTechnologies = [
   { name: "C++", ring: "outer", angle: 8 },
@@ -28,6 +29,9 @@ export function TechnologyOrbit() {
     if (!orbit || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let visible = true;
+    let audioReactive = false;
+    let lastAudioPulse = 0;
+    let nextAudioIcon = 0;
     let sparkleTimer = 0;
     const glowTimers = new Set<number>();
     const observer = new IntersectionObserver(([entry]) => {
@@ -37,7 +41,7 @@ export function TechnologyOrbit() {
     const scheduleSparkle = () => {
       sparkleTimer = window.setTimeout(() => {
         const icons = Array.from(orbit.querySelectorAll<HTMLElement>(".orbit-tech-icon"));
-        if (visible && document.visibilityState === "visible" && icons.length > 0) {
+        if (!audioReactive && visible && document.visibilityState === "visible" && icons.length > 0) {
           const firstIndex = Math.floor(Math.random() * icons.length);
           const selected = [icons[firstIndex]];
           if (Math.random() > 0.7) selected.push(icons[(firstIndex + 3 + Math.floor(Math.random() * 4)) % icons.length]);
@@ -55,10 +59,35 @@ export function TechnologyOrbit() {
       }, 1200 + Math.random() * 2400);
     };
 
+    const handleAudioEnergy = (event: Event) => {
+      const { active, high } = (event as CustomEvent<AudioEnergyDetail>).detail;
+      const isHighPulse = active && high >= 0.22;
+      audioReactive = isHighPulse;
+      if (!isHighPulse || !visible || document.visibilityState !== "visible") return;
+
+      const now = performance.now();
+      if (now - lastAudioPulse < 170) return;
+
+      const icons = Array.from(orbit.querySelectorAll<HTMLElement>(".orbit-tech-icon"));
+      if (icons.length === 0) return;
+
+      lastAudioPulse = now;
+      const icon = icons[nextAudioIcon % icons.length];
+      nextAudioIcon += 1;
+      icon.classList.add("is-glowing");
+      const timer = window.setTimeout(() => {
+        icon.classList.remove("is-glowing");
+        glowTimers.delete(timer);
+      }, 300);
+      glowTimers.add(timer);
+    };
+
     observer.observe(orbit);
+    window.addEventListener(AUDIO_ENERGY_EVENT, handleAudioEnergy);
     scheduleSparkle();
     return () => {
       observer.disconnect();
+      window.removeEventListener(AUDIO_ENERGY_EVENT, handleAudioEnergy);
       window.clearTimeout(sparkleTimer);
       glowTimers.forEach((timer) => window.clearTimeout(timer));
       orbit.querySelectorAll(".is-glowing").forEach((icon) => icon.classList.remove("is-glowing"));

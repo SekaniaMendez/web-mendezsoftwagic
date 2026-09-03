@@ -3,6 +3,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { EtherealArrow } from "@/components/ethereal-arrow";
+import { AUDIO_ENERGY_EVENT, type AudioEnergyDetail } from "@/lib/audio-reactivity";
+
+const ANALYSIS_INTERVAL_MS = 100;
+
+function averageFrequencyRange(data: Uint8Array<ArrayBuffer>, start: number, end: number) {
+  let total = 0;
+  const safeEnd = Math.min(end, data.length);
+
+  for (let index = start; index < safeEnd; index += 1) total += data[index];
+  return safeEnd > start ? total / (safeEnd - start) / 255 : 0;
+}
+
+function normalizeEnergy(value: number) {
+  return Math.min(1, Math.max(0, (value - 0.055) * 1.75));
+}
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
@@ -16,6 +31,91 @@ export function Navigation() {
   const soundWantedRef = useRef(true);
   const introLeavingRef = useRef(false);
   const introTimeoutRef = useRef<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const frequencyDataRef = useRef<Uint8Array<ArrayBuffer> | null>(null);
+  const analysisTimerRef = useRef<number | null>(null);
+
+  const prepareAudioAnalysis = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    if (!audioContextRef.current) {
+      const context = new AudioContext();
+      const analyser = context.createAnalyser();
+      const source = context.createMediaElementSource(audio);
+
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.82;
+      source.connect(analyser);
+      analyser.connect(context.destination);
+
+      audioContextRef.current = context;
+      analyserRef.current = analyser;
+      frequencyDataRef.current = new Uint8Array(analyser.frequencyBinCount);
+    }
+
+    if (audioContextRef.current.state === "suspended") {
+      void audioContextRef.current.resume();
+    }
+  }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const emitEnergy = (detail: AudioEnergyDetail) => {
+      window.dispatchEvent(new CustomEvent<AudioEnergyDetail>(AUDIO_ENERGY_EVENT, { detail }));
+    };
+
+    const stopAnalysis = () => {
+      if (analysisTimerRef.current !== null) window.clearInterval(analysisTimerRef.current);
+      analysisTimerRef.current = null;
+      emitEnergy({ active: false, high: 0 });
+    };
+
+    const analyse = () => {
+      if (audio.paused || document.visibilityState !== "visible") {
+        stopAnalysis();
+        return;
+      }
+
+      const analyser = analyserRef.current;
+      const frequencyData = frequencyDataRef.current;
+      if (analyser && frequencyData) {
+        analyser.getByteFrequencyData(frequencyData);
+        emitEnergy({
+          active: true,
+          high: normalizeEnergy(averageFrequencyRange(frequencyData, 18, 48)),
+        });
+      }
+    };
+
+    const startAnalysis = () => {
+      if (!analyserRef.current || analysisTimerRef.current !== null || document.visibilityState !== "visible") return;
+      analyse();
+      analysisTimerRef.current = window.setInterval(analyse, ANALYSIS_INTERVAL_MS);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible" && !audio.paused) startAnalysis();
+      else stopAnalysis();
+    };
+
+    audio.addEventListener("play", startAnalysis);
+    audio.addEventListener("pause", stopAnalysis);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      audio.removeEventListener("play", startAnalysis);
+      audio.removeEventListener("pause", stopAnalysis);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopAnalysis();
+      void audioContextRef.current?.close();
+      audioContextRef.current = null;
+      analyserRef.current = null;
+      frequencyDataRef.current = null;
+    };
+  }, []);
 
   const dismissIntro = useCallback(() => {
     if (introLeavingRef.current) return;
@@ -99,6 +199,7 @@ export function Navigation() {
 
     if (!audio) return;
     if (nextSoundOn) {
+      prepareAudioAnalysis();
       audio.volume = 0.24;
       void audio.play().catch(() => undefined);
     } else {
@@ -110,12 +211,18 @@ export function Navigation() {
     const video = videoRef.current;
     if (!video) return;
 
+    prepareAudioAnalysis();
     audioRef.current?.pause();
     video.currentTime = 0;
     video.muted = false;
     setIntroStarted(true);
     setIntroRun((run) => run + 1);
     void video.play().catch(() => setIntroStarted(false));
+  };
+
+  const skipIntro = () => {
+    prepareAudioAnalysis();
+    dismissIntro();
   };
 
   const replayIntro = () => {
@@ -139,7 +246,7 @@ export function Navigation() {
         <video ref={videoRef} className="intro-video" src="/images/SoftwaficPresentation.mp4" playsInline preload="auto" onEnded={dismissIntro} onError={dismissIntro} />
         <div className="intro-vignette" aria-hidden="true" />
         <div className="intro-label" aria-hidden="true"><span /> MendezSoftwagic / Presentation</div>
-        <button className="intro-skip" type="button" onClick={dismissIntro}>Skip <EtherealArrow small /></button>
+        <button className="intro-skip" type="button" onClick={skipIntro}>Skip <EtherealArrow small /></button>
         <div className="intro-gate" hidden={introStarted}>
           <p>Eight second transmission</p>
           <button className="intro-enter-button" type="button" onClick={startIntro} autoFocus>
