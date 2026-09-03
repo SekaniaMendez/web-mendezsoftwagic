@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { Cormorant_Garamond, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import "./globals.css";
 
@@ -27,5 +28,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#05070a", colorScheme: "dark" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${display.variable} ${sans.variable}`}><body><Navigation />{children}</body></html>;
+  return (
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+      <body>
+        <Navigation />
+        {children}
+        <Analytics />
+      </body>
+    </html>
+  );
 }

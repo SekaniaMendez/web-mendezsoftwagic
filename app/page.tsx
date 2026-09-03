@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AstralClassifier } from "@/components/astral-classifier";
 import { EtherealArrow } from "@/components/ethereal-arrow";
-import { MagicLab } from "@/components/magic-lab";
 import { ProjectCard } from "@/components/project-card";
 import { SceneEffects } from "@/components/scene-effects";
 import { TechnologyBadge } from "@/components/technology-badge";
@@ -39,9 +39,9 @@ export default function Home() {
         <div className="projects-grid">{projects.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} />)}</div>
       </section>
 
-      <section className="section lab-section" id="lab">
-        <div className="section-heading reveal"><div><p className="section-kicker">The Magic Lab / interactive</p><h2>Don&apos;t just watch.<br /><em>Bend the system.</em></h2></div><p>A small experiment in emergence: simple rules, intelligent behavior and a little human influence.</p></div>
-        <MagicLab />
+      <section className="section lab-section" id="astral">
+        <div className="section-heading reveal"><div><p className="section-kicker">Umbra Caeli / interactive</p><h2>Your birth becomes<br /><em>a playable identity.</em></h2></div><p>A lightweight glimpse into Umbra Caeli&apos;s natal system: discover the element carried by your Sun and the class awakened by your Ascendant.</p></div>
+        <AstralClassifier />
       </section>
 
       <section className="section about-section" id="about">

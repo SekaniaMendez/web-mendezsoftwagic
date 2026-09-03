@@ -265,7 +265,7 @@ export function Navigation() {
         </Link>
         <div className={`nav-links ${open ? "is-open" : ""}`}>
           <Link href="/#work" onClick={close}>Work</Link>
-          <Link href="/#lab" onClick={close}>Magic Lab</Link>
+          <Link href="/#astral" onClick={close}>Astral Classifier</Link>
           <Link href="/#about" onClick={close}>About</Link>
           <button className="sound-toggle" type="button" onClick={toggleSound} aria-pressed={soundOn} aria-label={soundOn ? "Pause Narvent — Fainted" : "Play Narvent — Fainted"} title="Narvent — Fainted">
             <span className={soundOn ? "sound-bars is-playing" : "sound-bars"} aria-hidden="true"><i /><i /><i /></span>
